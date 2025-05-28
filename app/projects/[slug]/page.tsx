@@ -136,7 +136,7 @@ const semanasData: Record<string, SemanaData> = {
         imagen: "/Html-emmet.webp"
     },
 
-    "semana-3-css-avanzado": {
+    "semana-3-css-basico-avanzado": {
         id: 3,
         titulo: "CSS Completo",
         subtitulo: "De Básico a Avanzado",
@@ -627,7 +627,7 @@ function getSlugSuffix(semanaId: number): string {
     const suffixes: Record<number, string> = {
         1: "silabo",
         2: "html-emmet",
-        3: "css-avanzado",
+        3: "css-basico-avanzado",
         4: "tailwind-bootstrap",
         5: "javascript-typescript",
         6: "principios-react",

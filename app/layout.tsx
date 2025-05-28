@@ -18,7 +18,7 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning className="scroll-smooth">
         <head>
-            <title>ZDCarFI - fullstack</title>
+            <title>Portafolio - ZDCarFI </title>
             <meta name="description"
                   content="Portfolio"/>
             <link rel="icon" href="/favicon.ico" sizes="32x32"/>

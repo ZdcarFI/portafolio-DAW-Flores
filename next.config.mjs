@@ -24,6 +24,10 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  // For production optimizations
+  ...(process.env.NODE_ENV === 'production' && {
+    output: 'standalone',
+  }),
 }
 
 mergeConfig(nextConfig, userConfig)

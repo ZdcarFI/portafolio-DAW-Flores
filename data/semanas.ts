@@ -3819,16 +3819,6 @@ interface Semanas {
 
 }
 
-import {LucideIcon} from "lucide-react";
-import {
-    FileText,
-    Code,
-    Palette,
-    Zap,
-    Cpu,
-    Component,
-    Play,
-} from "lucide-react";
 
 interface SemanasProps {
     id: number;

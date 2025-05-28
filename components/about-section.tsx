@@ -6,8 +6,10 @@ import {useRef, useState} from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {Button} from "@/components/ui/button"
-import {User} from "lucide-react"
+import {Clock, Code2, GraduationCap, Heart, MapPin, Rocket, User} from "lucide-react"
 import {FileText} from "lucide-react"
+import {Card, CardContent} from "@/components/ui/card";
+import {Badge} from "@/components/ui/badge";
 
 export default function AboutSection() {
     const ref = useRef(null)
@@ -15,7 +17,7 @@ export default function AboutSection() {
     const [isHovered, setIsHovered] = useState(false)
 
     return (
-        <section id="about" className="py-20 bg-muted/50">
+        <section id="about" className="py-16 bg-muted/50">
             <div className="container px-4 md:px-6">
                 <motion.div
                     ref={ref}
@@ -37,7 +39,7 @@ export default function AboutSection() {
                         >
                             <div className="relative">
                                 <Image
-                                    src="/profilImg.png"
+                                    src="/Foto.png"
                                     alt="Sobre mí"
                                     width={600}
                                     height={600}
@@ -52,12 +54,7 @@ export default function AboutSection() {
                                             animate={{opacity: 1, scale: 1}}
                                             transition={{duration: 0.3}}
                                         >
-                                            <Button size="lg" asChild>
-                                                <Link href="/profile">
-                                                    <User className="mr-2 h-4 w-4"/>
-                                                    Ver Perfil
-                                                </Link>
-                                            </Button>
+
                                         </motion.div>
                                     </div>
                                 )}
@@ -72,50 +69,101 @@ export default function AboutSection() {
 
                         <div className="space-y-4 text-muted-foreground">
                             <p>
-                                ¡Hola! Soy Carlos Andre Johan Flores Ildefonso, un apasionado **Estudiante de Ingeniería de Sistemas** con
-                                gran interés en el desarrollo web.
+                                ¡Hola! Soy <span
+                                className="text-primary font-bold">Carlos Andre Johan Flores Ildefonso</span>,
+                                Estudiante de Ingeniería de Sistemas en constante formación en desarrollo web Frontend y
+                                Backend
                             </p>
 
-                            <p>
-                                Me especializo en la construcción de aplicaciones robustas y escalables que resuelven
-                                problemas del mundo real. Con una sólida base en los fundamentos de la informática y una
-                                gran atención al detalle, me esfuerzo por escribir código limpio, eficiente y fácil de
-                                mantener.
-                            </p>
-
-                            <p>
-                                Cuando no estoy codificando, me puedes encontrar explorando nuevas tecnologías,
-                                escuchar música o hacer deporte.
-                            </p>
-                        </div>
-
-                        <div className="mt-8 grid grid-cols-2 gap-4">
-                            <div>
-                                <h3 className="font-medium text-lg">Educación</h3>
-                                <p className="text-muted-foreground">Universidad Nacional del Centro del Perú</p>
+                            <div className="flex items-start gap-3">
+                                <div className="bg-primary/10 p-2 rounded-lg mt-1">
+                                    <Code2 className="h-5 w-5 text-primary"/>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-lg mb-2">Desarrollador Full Stack en Proceso</h3>
+                                    <p className="text-muted-foreground leading-relaxed">
+                                        Me especializo en la construcción de aplicaciones robustas y escalables que
+                                        resuelven
+                                        problemas del mundo real, con una sólida base en los fundamentos de la
+                                        informática.
+                                    </p>
+                                </div>
                             </div>
 
-
-                            <div>
-                                <h3 className="font-medium text-lg">Ubicación</h3>
-                                <p className="text-muted-foreground">Remoto</p>
+                            <div className="flex items-start gap-3">
+                                <div className="bg-primary/10 p-2 rounded-lg mt-1">
+                                    <Rocket className="h-5 w-5 text-primary"/>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-lg mb-2">Innovación e Impacto</h3>
+                                    <p className="text-muted-foreground leading-relaxed">
+                                        Apasionado por aprender nuevas tecnologías y crear soluciones útiles que generen
+                                        impacto,
+                                        siempre enfocado en escribir código limpio, eficiente y fácil de mantener.
+                                    </p>
+                                </div>
                             </div>
 
-                            <div>
-                                <h3 className="font-medium text-lg">Disponibilidad</h3>
-                                <p className="text-muted-foreground">Full time</p>
+                            <div className="flex items-start gap-3">
+                                <div className="bg-primary/10 p-2 rounded-lg mt-1">
+                                    <Heart className="h-5 w-5 text-primary"/>
+                                </div>
+                                <div>
+                                    <h3 className="font-semibold text-lg mb-2">Más Allá del Código</h3>
+                                    <p className="text-muted-foreground leading-relaxed">
+                                        Cuando no estoy programando, me encuentras explorando nuevas tecnologías,
+                                        escuchando música o practicando deportes. Creo en el equilibrio entre la pasión
+                                        profesional y el crecimiento personal.
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
-                        <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                            <Button size="lg" variant="outline" asChild className="group">
-                                <Link href="/about">
-                                    <FileText className="mr-2 h-4 w-4 group-hover:animate-pulse"/>
-                                    Conoce Más Sobre Mí
-                                </Link>
-                            </Button>
+                        <div className="mt-6 grid md:grid-cols-3 gap-6 mb-12">
+                            <Card
+                                className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-primary/10">
+                                <CardContent className="p-6 text-center">
+                                    <div
+                                        className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                                        <GraduationCap className="h-7 w-7 text-primary"/>
+                                    </div>
+                                    <h3 className="font-semibold text-lg mb-2">Educación</h3>
+                                    <p className="text-muted-foreground text-sm">Universidad Nacional del Centro del
+                                        Perú</p>
+                                    <Badge variant="outline" className="mt-2 text-xs">Ingeniería de Sistemas</Badge>
+                                </CardContent>
+                            </Card>
 
+                            <Card
+                                className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-primary/10">
+                                <CardContent className="p-6 text-center">
+                                    <div
+                                        className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                                        <MapPin className="h-7 w-7 text-primary"/>
+                                    </div>
+                                    <h3 className="font-semibold text-lg mb-2">Ubicación</h3>
+                                    <p className="text-muted-foreground text-sm">Trabajo Remoto, Huancayo - Perú</p>
+
+                                    <Badge variant="outline" className="mt-2 text-xs"> Disponible Globalmente</Badge>
+                                </CardContent>
+                            </Card>
+
+                            <Card
+                                className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-primary/10">
+                                <CardContent className="p-6 text-center">
+                                    <div
+                                        className="bg-primary/10 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                                        <Clock className="h-7 w-7 text-primary"/>
+                                    </div>
+                                    <h3 className="font-semibold text-lg mb-2">Disponibilidad</h3>
+                                    <p className="text-muted-foreground text-sm">Tiempo Completo</p>
+
+                                    <Badge variant="outline" className="mt-2 text-xs"> Inmediata</Badge>
+                                </CardContent>
+                            </Card>
                         </div>
+
+
                     </div>
                 </motion.div>
             </div>

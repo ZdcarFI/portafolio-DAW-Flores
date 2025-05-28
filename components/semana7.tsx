@@ -2,7 +2,6 @@
 
 import {useState} from "react"
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card"
-import {Badge} from "@/components/ui/badge"
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
 import {Target, ExternalLink, Cpu, Play, Zap, TestTube} from "lucide-react"
 import {ejemplo_7} from "@/data/semanas"
@@ -50,16 +49,16 @@ export function Semana7Examples() {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <Tabs defaultValue="objetivo" className="w-full">
+                        <Tabs defaultValue="reflexion" className="w-full">
                             <TabsList className="grid w-full grid-cols-2">
-                                <TabsTrigger value="objetivo">Objetivo</TabsTrigger>
+                                <TabsTrigger value="reflexion">Reflexion</TabsTrigger>
                                 <TabsTrigger value="codigo">Código</TabsTrigger>
 
                             </TabsList>
 
-                            <TabsContent value="objetivo" className="mt-4">
+                            <TabsContent value="reflexion" className="mt-4">
                                 <div className="prose prose-sm max-w-none">
-                                    <p>{ejemplo_7.find((e) => e.id === selectedExample)?.objetivo}</p>
+                                    <p>{ejemplo_7.find((e) => e.id === selectedExample)?.reflexion}</p>
                                 </div>
                             </TabsContent>
 

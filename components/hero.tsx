@@ -47,15 +47,15 @@ export default function Hero() {
                         animate={{opacity: 1}}
                         transition={{delay: 0.6, duration: 0.8}}
                     >
-                        <Button asChild size="lg" className="group">
-                            <Link
-                                href="https://drive.google.com/file/d/1g-HFdWDeUtshGh_tnRn5bcGzPBX5MlEv/view?usp=sharing"
-                                target="_blank">
-                                <Download className="mr-2 h-4 w-4 group-hover:animate-bounce"/>
-                                Descargar CV
-                            </Link>
-                        </Button>
-                        <Button variant="outline" size="lg" asChild>
+                        {/*<Button asChild size="lg" className="group">*/}
+                        {/*    <Link*/}
+                        {/*        href="https://drive.google.com/file/d/1g-HFdWDeUtshGh_tnRn5bcGzPBX5MlEv/view?usp=sharing"*/}
+                        {/*        target="_blank">*/}
+                        {/*        <Download className="mr-2 h-4 w-4 group-hover:animate-bounce"/>*/}
+                        {/*        Descargar CV*/}
+                        {/*    </Link>*/}
+                        {/*</Button>*/}
+                        <Button className="group-hover:animate-bounce" size="lg" asChild>
                             <Link href="/#projects">Ver mis Proyectos</Link>
                         </Button>
                     </motion.div>
@@ -80,7 +80,7 @@ export default function Hero() {
                     {[...Array(5)].map((_, i) => (
                         <motion.div
                             key={i}
-                            className="absolute rounded-full bg-primary/10 dark:bg-primary/5"
+                            className="absolute rounded-full bg-primary/30 dark:bg-primary/25"
                             style={{
                                 width: Math.random() * 300 + 50,
                                 height: Math.random() * 300 + 50,

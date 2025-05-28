@@ -4,16 +4,16 @@ interface Ejemplo {
     id: number
     titulo: string
     descripcion: string
-    objetivo: string
+    reflexion: string
     codigo: string
 }
 
 export const ejemplo_7: Ejemplo[] = [
     {
         id: 1,
-        titulo: "Advanced Hooks",
+        titulo: "Hooks",
         descripcion: "useReducer, useCallback, useMemo y custom hooks",
-        objetivo:
+        reflexion:
             "Dominar los hooks avanzados de React para manejar estado complejo, optimizar rendimiento y crear hooks personalizados reutilizables.",
 
         codigo: `// 1. useReducer para estado complejo
@@ -219,206 +219,10 @@ function useApi(url) {
     },
     {
         id: 2,
-        titulo: "Component Patterns",
-        descripcion: "HOCs, Render Props, Compound Components y Context API",
-        objetivo:
-            "Implementar patrones avanzados de componentes para crear APIs flexibles y reutilizables, incluyendo HOCs, Render Props y Context API.",
-
-        codigo: `// 1. Higher-Order Component (HOC)
-function withLoading(WrappedComponent) {
-  return function WithLoadingComponent(props) {
-    if (props.loading) {
-      return (
-        <div className="flex items-center justify-center p-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-          <span className="ml-2">Loading...</span>
-        </div>
-      );
-    }
-    
-    return <WrappedComponent {...props} />;
-  };
-}
-
-// 2. HOC para autenticación
-function withAuth(WrappedComponent) {
-  return function WithAuthComponent(props) {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    
-    useEffect(() => {
-      // Simular verificación de autenticación
-      setTimeout(() => {
-        setUser({ id: 1, name: 'John Doe' });
-        setLoading(false);
-      }, 1000);
-    }, []);
-    
-    if (loading) {
-      return <div>Checking authentication...</div>;
-    }
-    
-    if (!user) {
-      return <div>Please log in to access this content.</div>;
-    }
-    
-    return <WrappedComponent {...props} user={user} />;
-  };
-}
-
-// 3. Render Props Pattern
-function DataFetcher({ url, children }) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error);
-        setLoading(false);
-      });
-  }, [url]);
-  
-  return children({ data, loading, error });
-}
-
-// Uso del Render Props
-function UserProfile() {
-  return (
-    <DataFetcher url="/api/user">
-      {({ data, loading, error }) => {
-        if (loading) return <div>Loading user...</div>;
-        if (error) return <div>Error: {error.message}</div>;
-        return <div>Welcome, {data?.name}!</div>;
-      }}
-    </DataFetcher>
-  );
-}
-
-// 4. Compound Components Pattern
-const Modal = {
-  Root: function ModalRoot({ children, isOpen, onClose }) {
-    if (!isOpen) return null;
-    
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4">
-          {children}
-        </div>
-      </div>
-    );
-  },
-  
-  Header: function ModalHeader({ children, onClose }) {
-    return (
-      <div className="flex items-center justify-between p-4 border-b">
-        <h2 className="text-lg font-semibold">{children}</h2>
-        {onClose && (
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700"
-          >
-            ✕
-          </button>
-        )}
-      </div>
-    );
-  },
-  
-  Body: function ModalBody({ children }) {
-    return <div className="p-4">{children}</div>;
-  },
-  
-  Footer: function ModalFooter({ children }) {
-    return <div className="flex justify-end gap-2 p-4 border-t">{children}</div>;
-  }
-};
-
-// Uso de Compound Components
-function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  return (
-    <div>
-      <button onClick={() => setIsModalOpen(true)}>Open Modal</button>
-      
-      <Modal.Root isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <Modal.Header onClose={() => setIsModalOpen(false)}>
-          Confirm Action
-        </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to delete this item?
-        </Modal.Body>
-        <Modal.Footer>
-          <button onClick={() => setIsModalOpen(false)}>Cancel</button>
-          <button className="bg-red-500 text-white px-4 py-2 rounded">
-            Delete
-          </button>
-        </Modal.Footer>
-      </Modal.Root>
-    </div>
-  );
-}
-
-// 5. Context API avanzado
-const ThemeContext = createContext();
-const UserContext = createContext();
-
-function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('light');
-  
-  const toggleTheme = useCallback(() => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  }, []);
-  
-  const value = useMemo(() => ({
-    theme,
-    toggleTheme,
-    colors: theme === 'light' 
-      ? { bg: 'white', text: 'black' }
-      : { bg: 'black', text: 'white' }
-  }), [theme, toggleTheme]);
-  
-  return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
-  );
-}
-
-function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-}
-
-// 6. Provider composition
-function AppProviders({ children }) {
-  return (
-    <ThemeProvider>
-      <UserProvider>
-        <NotificationProvider>
-          {children}
-        </NotificationProvider>
-      </UserProvider>
-    </ThemeProvider>
-  );
-}`,
-    },
-    {
-        id: 3,
         titulo: "Performance Optimization",
         descripcion: "React.memo, code splitting y optimizaciones",
-        objetivo:
-            "Optimizar aplicaciones React usando memoización, code splitting, lazy loading y técnicas avanzadas de performance.",
+        reflexion:
+            "Optimizar aplicaciones React usando memorización, code splitting, lazy loading y técnicas avanzadas de performance.",
 
         codigo: `// 1. React.memo para componentes puros
 const ExpensiveComponent = memo(function ExpensiveComponent({ data, onUpdate }) {
@@ -659,360 +463,13 @@ function LazyImage({ src, alt, ...props }) {
   );
 }`,
     },
-    {
-        id: 4,
-        titulo: "Testing y Architecture",
-        descripcion: "React Testing Library, arquitectura y error boundaries",
-        objetivo:
-            "Implementar testing comprehensivo con React Testing Library, crear arquitecturas escalables y manejar errores con error boundaries.",
-
-        codigo: `// 1. Error Boundary
-class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false, error: null, errorInfo: null };
-  }
-  
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-  
-  componentDidCatch(error, errorInfo) {
-    this.setState({
-      error: error,
-      errorInfo: errorInfo
-    });
-    
-    // Log error to service
-    console.error('Error caught by boundary:', error, errorInfo);
-  }
-  
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div className="error-boundary p-4 border border-red-500 rounded">
-          <h2 className="text-red-600 font-bold">Something went wrong!</h2>
-          <details className="mt-2">
-            <summary>Error details</summary>
-            <pre className="text-sm mt-2 text-red-500">
-              {this.state.error && this.state.error.toString()}
-            </pre>
-          </details>
-          <button 
-            onClick={() => this.setState({ hasError: false })}
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-          >
-            Try again
-          </button>
-        </div>
-      );
-    }
-    
-    return this.props.children;
-  }
-}
-
-// 2. Hook Error Boundary (React 18+)
-function useErrorBoundary() {
-  const [error, setError] = useState(null);
-  
-  const resetError = useCallback(() => {
-    setError(null);
-  }, []);
-  
-  const captureError = useCallback((error) => {
-    setError(error);
-  }, []);
-  
-  useEffect(() => {
-    if (error) {
-      throw error;
-    }
-  }, [error]);
-  
-  return { captureError, resetError };
-}
-
-// 3. Component Testing Examples
-// Counter.jsx
-function Counter({ initialValue = 0, onCountChange }) {
-  const [count, setCount] = useState(initialValue);
-  
-  const increment = () => {
-    const newCount = count + 1;
-    setCount(newCount);
-    onCountChange?.(newCount);
-  };
-  
-  const decrement = () => {
-    const newCount = count - 1;
-    setCount(newCount);
-    onCountChange?.(newCount);
-  };
-  
-  return (
-    <div>
-      <span data-testid="count-value">{count}</span>
-      <button data-testid="increment-btn" onClick={increment}>
-        +
-      </button>
-      <button data-testid="decrement-btn" onClick={decrement}>
-        -
-      </button>
-    </div>
-  );
-}
-
-// Counter.test.jsx
-import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import Counter from './Counter';
-
-describe('Counter Component', () => {
-  test('renders with initial value', () => {
-    render(<Counter initialValue={5} />);
-    expect(screen.getByTestId('count-value')).toHaveTextContent('5');
-  });
-  
-  test('increments count when increment button is clicked', async () => {
-    const user = userEvent.setup();
-    render(<Counter />);
-    
-    const incrementBtn = screen.getByTestId('increment-btn');
-    await user.click(incrementBtn);
-    
-    expect(screen.getByTestId('count-value')).toHaveTextContent('1');
-  });
-  
-  test('calls onCountChange when count changes', async () => {
-    const user = userEvent.setup();
-    const mockOnCountChange = jest.fn();
-    render(<Counter onCountChange={mockOnCountChange} />);
-    
-    await user.click(screen.getByTestId('increment-btn'));
-    
-    expect(mockOnCountChange).toHaveBeenCalledWith(1);
-  });
-});
-
-// 4. Custom Hook Testing
-// useCounter.js
-function useCounter(initialValue = 0) {
-  const [count, setCount] = useState(initialValue);
-  
-  const increment = useCallback(() => setCount(c => c + 1), []);
-  const decrement = useCallback(() => setCount(c => c - 1), []);
-  const reset = useCallback(() => setCount(initialValue), [initialValue]);
-  
-  return { count, increment, decrement, reset };
-}
-
-// useCounter.test.js
-import { renderHook, act } from '@testing-library/react';
-import { useCounter } from './useCounter';
-
-describe('useCounter Hook', () => {
-  test('should initialize with default value', () => {
-    const { result } = renderHook(() => useCounter());
-    expect(result.current.count).toBe(0);
-  });
-  
-  test('should initialize with custom value', () => {
-    const { result } = renderHook(() => useCounter(10));
-    expect(result.current.count).toBe(10);
-  });
-  
-  test('should increment count', () => {
-    const { result } = renderHook(() => useCounter());
-    
-    act(() => {
-      result.current.increment();
-    });
-    
-    expect(result.current.count).toBe(1);
-  });
-  
-  test('should reset to initial value', () => {
-    const { result } = renderHook(() => useCounter(5));
-    
-    act(() => {
-      result.current.increment();
-      result.current.increment();
-    });
-    
-    expect(result.current.count).toBe(7);
-    
-    act(() => {
-      result.current.reset();
-    });
-    
-    expect(result.current.count).toBe(5);
-  });
-});
-
-// 5. Integration Testing
-// UserProfile.jsx
-function UserProfile({ userId }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    fetch(\`/api/users/\${userId}\`)
-      .then(response => {
-        if (!response.ok) throw new Error('User not found');
-        return response.json();
-      })
-      .then(userData => {
-        setUser(userData);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [userId]);
-  
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  
-  return (
-    <div>
-      <h1>{user.name}</h1>
-      <p>{user.email}</p>
-      <p>Role: {user.role}</p>
-    </div>
-  );
-}
-
-// UserProfile.test.jsx
-import { render, screen, waitFor } from '@testing-library/react';
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
-import UserProfile from './UserProfile';
-
-const server = setupServer(
-  rest.get('/api/users/:userId', (req, res, ctx) => {
-    const { userId } = req.params;
-    
-    if (userId === '1') {
-      return res(ctx.json({
-        id: 1,
-        name: 'John Doe',
-        email: 'john@example.com',
-        role: 'admin'
-      }));
-    }
-    
-    return res(ctx.status(404));
-  })
-);
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
-
-describe('UserProfile Integration', () => {
-  test('displays user information when loaded successfully', async () => {
-    render(<UserProfile userId="1" />);
-    
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-    
-    await waitFor(() => {
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
-    });
-    
-    expect(screen.getByText('john@example.com')).toBeInTheDocument();
-    expect(screen.getByText('Role: admin')).toBeInTheDocument();
-  });
-  
-  test('displays error when user not found', async () => {
-    render(<UserProfile userId="999" />);
-    
-    await waitFor(() => {
-      expect(screen.getByText('Error: User not found')).toBeInTheDocument();
-    });
-  });
-});
-
-// 6. Component Architecture Pattern
-// Feature-based structure
-/*
-src/
-  features/
-    auth/
-      components/
-        LoginForm.jsx
-        SignupForm.jsx
-      hooks/
-        useAuth.js
-      services/
-        authApi.js
-      __tests__/
-        LoginForm.test.jsx
-    dashboard/
-      components/
-        Dashboard.jsx
-        DashboardCard.jsx
-      hooks/
-        useDashboard.js
-  shared/
-    components/
-      Button.jsx
-      Modal.jsx
-    hooks/
-      useLocalStorage.js
-    utils/
-      api.js
-*/
-
-// Service layer pattern
-class ApiService {
-  constructor(baseURL) {
-    this.baseURL = baseURL;
-  }
-  
-  async request(endpoint, options = {}) {
-    const url = \`\${this.baseURL}\${endpoint}\`;
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-      },
-      ...options
-    };
-    
-    const response = await fetch(url, config);
-    
-    if (!response.ok) {
-      throw new Error(\`HTTP error! status: \${response.status}\`);
-    }
-    
-    return response.json();
-  }
-  
-  get(endpoint) {
-    return this.request(endpoint);
-  }
-  
-  post(endpoint, data) {
-    return this.request(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(data)
-    });
-  }
-}
-
-const apiService = new ApiService('/api');
-export default apiService;`,
-    },
 ]
 export const ejemplo_6: Ejemplo[] = [
     {
         id: 1,
         titulo: "React Fundamentals",
         descripcion: "Componentes, JSX, Props y State con Hooks",
-        objetivo:
+        reflexion:
             "Dominar los conceptos fundamentales de React incluyendo componentes funcionales, JSX, manejo de props, state con hooks y event handling para crear interfaces interactivas.",
 
         codigo: `// 1. Componente funcional básico con JSX
@@ -1160,8 +617,8 @@ function TodoItem({ todo, onToggle, onDelete }) {
         id: 2,
         titulo: "Next.js Full-Stack",
         descripcion: "Routing, SSR, API Routes y Deployment",
-        objetivo:
-            "Aprender Next.js desde el routing basado en archivos hasta la creación de APIs completas, incluyendo SSR, SSG y deployment en Vercel.",
+        reflexion:
+            "Implementar routing basado en archivos, API Routes y SSR/SSG en Next.js me hizo apreciar su poder como meta-framework. Descubrí que el rendimiento mejora radicalmente al elegir estratégicamente entre generación estática (SSG) para contenido fijo y renderizado en servidor (SSR) para datos dinámicos. El deployment automático en Vercel fue la cereza del pastel, demostrando la coherencia de su ecosistema.",
 
         codigo: `// 1. Estructura de archivos Next.js App Router
 /*
@@ -1337,185 +794,10 @@ export async function POST(request: NextRequest) {
     },
     {
         id: 3,
-        titulo: "Vue.js Ecosystem",
-        descripcion: "Template Syntax, Composition API y Vue Router",
-        objetivo:
-            "Dominar Vue.js 3 con Composition API, template syntax, directivas, Vue Router para SPA y Pinia para gestión de estado global.",
-
-        codigo: `<!-- 1. Componente básico con Composition API -->
-<template>
-  <div class="counter-app">
-    <h1>{{ title }}</h1>
-    <div class="counter">
-      <button @click="decrement" :disabled="count <= 0">-</button>
-      <span class="count">{{ count }}</span>
-      <button @click="increment">+</button>
-    </div>
-    <div class="controls">
-      <button @click="reset">Reset</button>
-      <button @click="toggleAutoIncrement">
-        {{ isAutoIncrementing ? 'Parar' : 'Auto Incrementar' }}
-      </button>
-    </div>
-    <p v-if="count > 10" class="warning">
-      ¡El contador está muy alto!
-    </p>
-  </div>
-</template>
-
-<script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-
-// interface Props {
-//   initialCount?: number
-//   title?: string
-// }
-
-const props = withDefaults(defineProps<Props>(), {
-  initialCount: 0,
-  title: 'Contador Vue'
-})
-
-const emit = defineEmits<{
-  countChanged: [count: number]
-  reset: []
-}>()
-
-const count = ref(props.initialCount)
-const isAutoIncrementing = ref(false)
-//let intervalId: number | null = null
-
-const isEven = computed(() => count.value % 2 === 0)
-
-const increment = () => {
-  count.value++
-  emit('countChanged', count.value)
-}
-
-const decrement = () => {
-  if (count.value > 0) {
-    count.value--
-    emit('countChanged', count.value)
-  }
-}
-
-const reset = () => {
-  count.value = props.initialCount
-  emit('reset')
-}
-
-const toggleAutoIncrement = () => {
-  isAutoIncrementing.value = !isAutoIncrementing.value
-  
-  if (isAutoIncrementing.value) {
-  //  intervalId = setInterval(increment, 1000)
-  } else if (intervalId) {
-    clearInterval(intervalId)
- //   intervalId = null
-  }
-}
-
-watch(count, (newCount, oldCount) => {
-  console.log(\`Count changed from \${oldCount} to \${newCount}\`)
-})
-
-onMounted(() => {
-  console.log('Counter component mounted')
-})
-
-onUnmounted(() => {
-  if (intervalId) {
-    clearInterval(intervalId)
-  }
-})
-</script>
-
-<!-- 2. Vue Router setup -->
-// main.ts
-import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
-import { createPinia } from 'pinia'
-import App from './App.vue'
-
-import Home from './pages/Home.vue'
-import About from './pages/About.vue'
-import Blog from './pages/Blog.vue'
-
-const routes = [
-  { path: '/', name: 'Home', component: Home },
-  { path: '/about', name: 'About', component: About },
-  { path: '/blog', name: 'Blog', component: Blog },
-  { path: '/blog/:slug', name: 'BlogPost', component: () => import('./pages/BlogPost.vue') }
-]
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes
-})
-
-const pinia = createPinia()
-
-const app = createApp(App)
-app.use(router)
-app.use(pinia)
-app.mount('#app')
-
-<!-- 3. Pinia Store -->
-// stores/blog.ts
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-
-export interface BlogPost {
-  id: number
-  title: string
-  slug: string
-  content: string
-  author: string
-  date: string
-}
-
-export const useBlogStore = defineStore('blog', () => {
-  const posts = ref<BlogPost[]>([])
-  const loading = ref(false)
-  const error = ref<string | null>(null)
-
-  const publishedPosts = computed(() => 
-    posts.value.filter(post => post.date <= new Date().toISOString())
-  )
-
-  const getPostBySlug = computed(() => 
-    (slug: string) => posts.value.find(post => post.slug === slug)
-  )
-
-  const fetchPosts = async () => {
-    loading.value = true
-    try {
-      const response = await fetch('/api/posts')
-      const data = await response.json()
-      posts.value = data
-    } catch (err) {
-      error.value = 'Error al cargar posts'
-    } finally {
-      loading.value = false
-    }
-  }
-
-  return {
-    posts,
-    loading,
-    error,
-    publishedPosts,
-    getPostBySlug,
-    fetchPosts
-  }
-})`,
-    },
-    {
-        id: 4,
         titulo: "Framework Comparison",
         descripcion: "React vs Vue vs Angular - Comparación práctica",
-        objetivo:
-            "Comparar React, Vue y Angular a través de ejemplos prácticos, analizando sintaxis, performance, ecosistema y casos de uso para tomar decisiones informadas.",
+        reflexion:
+            "Al construir el mismo proyecto con los tres frameworks, comprendí que React ofrece flexibilidad a costa de más decisiones (state management, routing), Vue equilibra estructura y libertad con su sistema de SFC, mientras que Angular impone una arquitectura robusta ideal para equipos grandes. La elección depende del trade-off entre libertad de desarrollo y estructura predefinida.",
 
         codigo: `// COMPARACIÓN PRÁCTICA: MISMO COMPONENTE EN 3 FRAMEWORKS
 
@@ -1723,11 +1005,7 @@ Vue:
 ✅ Desarrolladores junior/senior
 ✅ Prototipado rápido
 
-Angular:
-✅ Aplicaciones enterprise
-✅ Equipos grandes
-✅ Aplicaciones complejas
-✅ TypeScript obligatorio
+
 */`,
     },
 ]
@@ -1736,7 +1014,7 @@ export const ejemplo_5: Ejemplo[] = [
         id: 1,
         titulo: "JavaScript ES6+ Moderno",
         descripcion: "Características esenciales de JavaScript moderno",
-        objetivo:
+        reflexion:
             "Dominar las características fundamentales de ES6+ incluyendo destructuring, arrow functions, template literals, y módulos para escribir JavaScript moderno y eficiente.",
 
         codigo: `// 1. Variables modernas y scope
@@ -1783,7 +1061,7 @@ const userById = users.find(user => user.id === 2);`,
         id: 2,
         titulo: "Programación Asíncrona",
         descripcion: "Promises, async/await y manejo de APIs",
-        objetivo:
+        reflexion:
             "Dominar la programación asíncrona en JavaScript utilizando Promises y async/await para manejar operaciones como llamadas a APIs, con manejo robusto de errores.",
 
         codigo: `// 1. Promises básicas
@@ -1877,7 +1155,7 @@ async function loadMultipleResources() {
         id: 3,
         titulo: "TypeScript Fundamentals",
         descripcion: "Introducción al tipado estático con TypeScript",
-        objetivo:
+        reflexion:
             "Aprender los fundamentos de TypeScript para agregar tipado estático a JavaScript, incluyendo tipos básicos, interfaces, generics y configuración de proyectos.",
 
         codigo: `// 1. Tipos básicos
@@ -1964,7 +1242,7 @@ interface Task {
         id: 4,
         titulo: "Manipulación del DOM",
         descripcion: "Interacción moderna con el DOM usando JavaScript",
-        objetivo:
+        reflexion:
             "Dominar la manipulación del DOM con JavaScript moderno, incluyendo selección de elementos, manejo de eventos, almacenamiento local y creación de interfaces interactivas.",
 
         codigo: `// 1. Selección moderna de elementos
@@ -2170,8 +1448,8 @@ export const ejemplo_4: Ejemplo[] = [
         id: 1,
         titulo: "Tailwind CSS Setup",
         descripcion: "Configuración completa de Tailwind CSS",
-        objetivo:
-            "Configurar Tailwind CSS desde cero en un proyecto, incluyendo instalación, configuración personalizada, y optimización para producción con purging de CSS no utilizado.",
+        reflexion:
+            "Configurar Tailwind desde cero me enseñó la importancia de optimizar el CSS para producción. Usar purgeCSS para eliminar estilos no utilizados mejoró drásticamente el rendimiento. Además, personalizar el archivo tailwind.config.js me permitió adaptar el framework a las necesidades específicas del diseño.",
 
         codigo: `# Instalación de Tailwind CSS
 npm install -D tailwindcss postcss autoprefixer
@@ -2278,8 +1556,8 @@ npx tailwindcss -i ./src/styles/globals.css -o ./dist/output.css --minify`,
         id: 2,
         titulo: "Bootstrap Grid System",
         descripcion: "Sistema de grillas responsivo con Bootstrap",
-        objetivo:
-            "Dominar el sistema de grillas de Bootstrap para crear layouts responsivos complejos, incluyendo breakpoints, offsets, y anidamiento de columnas.",
+        reflexion:
+            "Trabajar con el sistema de grillas de Bootstrap reforzó mi comprensión del diseño responsivo. Aprovechar breakpoints, offsets y columnas anidadas me permitió crear layouts complejos sin escribir CSS personalizado, aunque con ciertas limitaciones en diseños altamente customizados.",
 
         codigo: `<!-- Bootstrap CDN -->
 <!DOCTYPE html>
@@ -2476,8 +1754,8 @@ npx tailwindcss -i ./src/styles/globals.css -o ./dist/output.css --minify`,
         id: 3,
         titulo: "Comparación Tailwind vs Bootstrap",
         descripcion: "Mismo componente en ambos frameworks",
-        objetivo:
-            "Crear el mismo componente (tarjeta de producto) utilizando tanto Tailwind CSS como Bootstrap para comparar sintaxis, flexibilidad y resultado final.",
+        reflexion:
+            "Al implementar el mismo componente en Tailwind y Bootstrap, descubrí que Tailwind ofrece mayor control al trabajar con clases utilitarias, mientras que Bootstrap acelera el desarrollo con componentes preconstruidos. La clave está en elegir según el proyecto: Tailwind para diseños personalizados y Bootstrap para prototipado rápido.",
 
         codigo: `<!-- TAILWIND CSS VERSION -->
 <div class="max-w-sm mx-auto bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -2646,7 +1924,7 @@ export const ejemplo_3: Ejemplo[] = [
         id: 1,
         titulo: "Flexbox Layout Completo",
         descripcion: "Sistema de layout moderno con Flexbox",
-        objetivo:
+        reflexion:
             "Crear un layout completo utilizando Flexbox para header, navegación, contenido principal y footer, demostrando las propiedades fundamentales y casos de uso prácticos.",
 
         codigo: `/* HTML Structure */
@@ -2760,7 +2038,7 @@ export const ejemplo_3: Ejemplo[] = [
         id: 2,
         titulo: "CSS Grid Dashboard",
         descripcion: "Dashboard responsivo con CSS Grid",
-        objetivo:
+        reflexion:
             "Construir un dashboard complejo utilizando CSS Grid para crear layouts bidimensionales, demostrando grid areas, auto-fit, y responsive design avanzado.",
 
         codigo: `/* HTML Structure */
@@ -2952,7 +2230,7 @@ export const ejemplo_3: Ejemplo[] = [
         id: 3,
         titulo: "Animaciones CSS Avanzadas",
         descripcion: "Efectos y transiciones fluidas",
-        objetivo:
+        reflexion:
             "Crear animaciones CSS complejas utilizando keyframes, transforms, y transitions para mejorar la experiencia de usuario con efectos visuales atractivos y performantes.",
 
         codigo: `/* HTML Structure */
@@ -3130,237 +2408,14 @@ export const ejemplo_3: Ejemplo[] = [
     }
 }`,
     },
-    {
-        id: 4,
-        titulo: "Metodología BEM",
-        descripcion: "Organización de CSS con BEM",
-        objetivo:
-            "Implementar la metodología BEM (Block Element Modifier) para crear CSS mantenible y escalable, demostrando la nomenclatura y estructura de componentes reutilizables.",
-
-        codigo: `/* HTML Structure with BEM */
-<div class="card card--featured">
-    <div class="card__header">
-        <h2 class="card__title">Título de la Tarjeta</h2>
-        <span class="card__badge card__badge--new">Nuevo</span>
-    </div>
-    
-    <div class="card__body">
-        <p class="card__description">
-            Descripción del contenido de la tarjeta
-        </p>
-        <div class="card__meta">
-            <span class="card__date">15 Enero 2024</span>
-            <span class="card__author">Por Juan Pérez</span>
-        </div>
-    </div>
-    
-    <div class="card__footer">
-        <button class="button button--primary button--small">
-            Leer más
-        </button>
-        <button class="button button--secondary button--small">
-            Compartir
-        </button>
-    </div>
-</div>
-
-/* CSS with BEM Methodology */
-
-/* BLOCK: card */
-.card {
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease;
-}
-
-/* MODIFIER: card--featured */
-.card--featured {
-    border: 2px solid #007bff;
-    transform: scale(1.02);
-}
-
-.card--featured .card__title {
-    color: #007bff;
-}
-
-/* ELEMENT: card__header */
-.card__header {
-    padding: 1.5rem;
-    border-bottom: 1px solid #eee;
-    position: relative;
-}
-
-/* ELEMENT: card__title */
-.card__title {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #333;
-}
-
-/* ELEMENT: card__badge */
-.card__badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-/* MODIFIER: card__badge--new */
-.card__badge--new {
-    background: #28a745;
-    color: white;
-}
-
-/* MODIFIER: card__badge--popular */
-.card__badge--popular {
-    background: #ffc107;
-    color: #333;
-}
-
-/* ELEMENT: card__body */
-.card__body {
-    padding: 1.5rem;
-}
-
-/* ELEMENT: card__description */
-.card__description {
-    margin: 0 0 1rem 0;
-    color: #666;
-    line-height: 1.6;
-}
-
-/* ELEMENT: card__meta */
-.card__meta {
-    display: flex;
-    gap: 1rem;
-    font-size: 0.875rem;
-    color: #999;
-}
-
-/* ELEMENT: card__date, card__author */
-.card__date,
-.card__author {
-    display: flex;
-    align-items: center;
-}
-
-/* ELEMENT: card__footer */
-.card__footer {
-    padding: 1rem 1.5rem;
-    background: #f8f9fa;
-    display: flex;
-    gap: 0.75rem;
-    justify-content: flex-end;
-}
-
-/* BLOCK: button */
-.button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* MODIFIER: button--primary */
-.button--primary {
-    background: #007bff;
-    color: white;
-}
-
-.button--primary:hover {
-    background: #0056b3;
-    transform: translateY(-1px);
-}
-
-/* MODIFIER: button--secondary */
-.button--secondary {
-    background: transparent;
-    color: #6c757d;
-    border: 1px solid #6c757d;
-}
-
-.button--secondary:hover {
-    background: #6c757d;
-    color: white;
-}
-
-/* MODIFIER: button--small */
-.button--small {
-    padding: 0.375rem 0.75rem;
-    font-size: 0.75rem;
-}
-
-/* MODIFIER: button--large */
-.button--large {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-}
-
-/* MODIFIER: button--disabled */
-.button--disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
-/* Media Queries with BEM */
-@media (max-width: 768px) {
-    .card__header {
-        padding: 1rem;
-    }
-    
-    .card__body {
-        padding: 1rem;
-    }
-    
-    .card__footer {
-        padding: 0.75rem 1rem;
-        flex-direction: column;
-    }
-    
-    .card__meta {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-}
-
-/* BEM with CSS Custom Properties */
-.card {
-    --card-padding: 1.5rem;
-    --card-border-radius: 8px;
-    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card--compact {
-    --card-padding: 1rem;
-}
-
-.card--rounded {
-    --card-border-radius: 16px;
-}`,
-    },
 ]
 export const ejemplo_2: Ejemplo[] = [
     {
         id: 1,
         titulo: "Página HTML5 Semántica",
         descripcion: "Estructura completa con elementos semánticos",
-        objetivo:
-            "Crear una página web utilizando elementos semánticos de HTML5 para mejorar la accesibilidad, SEO y estructura del contenido.",
+        reflexion:
+            "Estructurar páginas con <article>, <section> y <nav> no es solo buenas prácticas: es comunicar significado a navegadores, motores de búsqueda y tecnologías asistivas. La semántica es el puente entre el código y su interpretación universal.",
         codigo: `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -3416,8 +2471,8 @@ export const ejemplo_2: Ejemplo[] = [
         id: 2,
         titulo: "Formulario Avanzado",
         descripcion: "Formulario con validación HTML5 y accesibilidad",
-        objetivo:
-            "Implementar un formulario completo utilizando los nuevos tipos de input de HTML5, validación nativa y mejores prácticas de accesibilidad.",
+        reflexion:
+            " Implementar tipos como email, tel y atributos como pattern o aria-invalid elevó mi comprensión de la interacción usuario-interfaz.",
         codigo: `<form action="/submit" method="post" novalidate>
     <fieldset>
         <legend>Información Personal</legend>
@@ -3505,8 +2560,8 @@ export const ejemplo_2: Ejemplo[] = [
         id: 3,
         titulo: "Emmet Shortcuts Esenciales",
         descripcion: "Abreviaciones de Emmet para desarrollo rápido",
-        objetivo:
-            "Dominar las abreviaciones más útiles de Emmet para acelerar significativamente la escritura de código HTML y mejorar la productividad.",
+        reflexion:
+            "Dominar Emmet fue un punto de inflexión en mi productividad. Estas abreviaciones no son simples atajos, sino un lenguaje que transforma cómo escribo HTML/CSS, reduciendo errores y acelerando mi flujo de trabajo de manera exponencial.",
         codigo: `/* Abreviaciones básicas de Emmet */
 
 /* 1. Estructura HTML básica */
@@ -3577,10 +2632,8 @@ form>fieldset>legend{Datos personales}+input:text[name=nombre]+input:email[name=
         id: 4,
         titulo: "Multimedia Responsiva",
         descripcion: "Imágenes y videos adaptativos",
-        objetivo:
-            "Implementar contenido multimedia que se adapte a diferentes dispositivos usando técnicas modernas de HTML5 como srcset, picture y lazy loading.",
-
-
+        reflexion:
+            "Al implementar imágenes y videos adaptativos, comprendí que el verdadero responsive va más allá del CSS. Usar <picture>, srcset y lazy loading no solo mejora el rendimiento, sino que garantiza una experiencia óptima en cualquier dispositivo – un requisito esencial en la web moderna.",
         codigo: `<!-- Imagen responsiva con srcset -->
 <img 
     src="imagen-small.jpg" 
@@ -3692,34 +2745,70 @@ export const ejemplo_1: Ejemplo[] = [
         id: 1,
         titulo: "Configuración de VS Code",
         descripcion: "Setup completo de Visual Studio Code para desarrollo web",
-        objetivo:
+        reflexion:
             "Configurar un entorno de desarrollo profesional con VS Code, extensiones esenciales y configuraciones optimizadas para productividad máxima.",
-
         codigo: `// settings.json - Configuración recomendada
 {
-  "editor.fontSize": 14,
-  "editor.fontFamily": "Fira Code, Consolas, monospace",
-  "editor.fontLigatures": true,
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.wordWrap": "on",
-  "editor.minimap.enabled": false,
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+  "name": "mi-proyecto-web",
+  "version": "1.0.0",
+  "description": "Proyecto web moderno con Next.js y TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
   },
-  "emmet.includeLanguages": {
-    "javascript": "javascriptreact"
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "lucide-react": "^0.263.1",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^2.0.0",
+    "class-variance-authority": "^0.7.0"
   },
-  "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 1000
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.5.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "@tailwindcss/typography": "^0.5.0",
+    "cross-env": "^7.0.3"
+  },
+  "keywords": [
+    "nextjs",
+    "react",
+    "typescript",
+    "tailwindcss",
+    "web-development"
+  ],
+  "author": "Carlos Andre Johan Flores Ildefonso",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/mi-proyecto-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tu-usuario/mi-proyecto-web/issues"
+  },
+  "homepage": "https://github.com/tu-usuario/mi-proyecto-web#readme"
 }`,
     },
     {
         id: 2,
         titulo: "Primeros pasos con Git",
         descripcion: "Comandos básicos de Git y flujo de trabajo",
-        objetivo:
+        reflexion:
             "Dominar los comandos fundamentales de Git para control de versiones, incluyendo inicialización de repositorios, commits, y colaboración básica.",
 
         codigo: `# Configuración inicial
@@ -3749,7 +2838,7 @@ git diff`,
         id: 3,
         titulo: "Estructura de Proyecto Web",
         descripcion: "Organización profesional de archivos y carpetas",
-        objetivo:
+        reflexion:
             "Crear una estructura de proyecto escalable y mantenible que siga las mejores prácticas de la industria para desarrollo web.",
 
         codigo: `proyecto-web/
@@ -3776,48 +2865,8 @@ git diff`,
 ├── package.json
 └── package-lock.json`,
     },
-    {
-        id: 4,
-        titulo: "Plan de Estudio Personal",
-        descripcion: "Metodología SMART para objetivos de aprendizaje",
-        objetivo:
-            "Desarrollar un plan de estudio personalizado usando la metodología SMART para establecer objetivos claros, medibles y alcanzables en el desarrollo web.",
 
-        codigo: `// Ejemplo de objetivo SMART
-const objetivoSMART = {
-  especifico: "Aprender HTML5 semántico",
-  medible: "Crear 5 páginas web diferentes",
-  alcanzable: "Dedicar 2 horas diarias",
-  relevante: "Para mi carrera como frontend developer",
-  temporal: "En 2 semanas",
-  
-  plan: [
-    "Semana 1: Elementos básicos y semánticos",
-    "Semana 2: Formularios y multimedia",
-    "Proyecto final: Landing page completa"
-  ],
-  
-  recursos: [
-    "MDN Web Docs",
-    "freeCodeCamp",
-    "Práctica diaria en CodePen"
-  ]
-}`,
-    },
 ]
-
-interface Semanas {
-    id: number;
-    titulo: string;
-    subtitulo: string;
-    descripcion: string;
-    icono: LucideIcon;
-    color: string;
-    tecnologias: string[];
-    imagen: string;
-    slug: string;
-
-}
 
 
 interface SemanasProps {
@@ -3840,8 +2889,8 @@ export const Semanas: SemanasProps[] = [
         descripcion: "Establecimiento de bases sólidas y planificación del viaje de aprendizaje en desarrollo web moderno.",
         icono: FileText,
         color: "from-blue-500 to-cyan-500",
-        tecnologias: ["Planificación", "Metodología", "Objetivos"],
-        imagen: "/placeholder.svg?height=300&width=400",
+        tecnologias: ["Planificación", "Metodología", "Visual Studio Code"],
+        imagen: "/Fundamentos.png",
         slug: "semana-1-silabo",
     },
     {
@@ -3852,7 +2901,7 @@ export const Semanas: SemanasProps[] = [
         icono: Code,
         color: "from-orange-500 to-red-500",
         tecnologias: ["HTML5", "Emmet", "Semántica", "Accesibilidad"],
-        imagen: "/placeholder.svg?height=300&width=400",
+        imagen: "/Html-emmet.webp",
         slug: "semana-2-html-emmet",
     },
     {
@@ -3863,8 +2912,8 @@ export const Semanas: SemanasProps[] = [
         icono: Palette,
         color: "from-purple-500 to-pink-500",
         tecnologias: ["CSS3", "Flexbox", "Grid", "Animaciones"],
-        imagen: "/placeholder.svg?height=300&width=400",
-        slug: "semana-3-css-avanzado",
+        imagen: "/css.png",
+        slug: "semana-3-css-basico-avanzado",
     },
     {
         id: 4,
@@ -3874,7 +2923,7 @@ export const Semanas: SemanasProps[] = [
         icono: Zap,
         color: "from-green-500 to-teal-500",
         tecnologias: ["Tailwind CSS", "Bootstrap", "Utility-First", "Responsive"],
-        imagen: "/placeholder.svg?height=300&width=400",
+        imagen: "/t-b.avif",
         slug: "semana-4-tailwind-bootstrap",
     },
     {
@@ -3885,7 +2934,7 @@ export const Semanas: SemanasProps[] = [
         icono: Cpu,
         color: "from-yellow-500 to-orange-500",
         tecnologias: ["JavaScript ES6+", "TypeScript", "DOM", "Async/Await"],
-        imagen: "/placeholder.svg?height=300&width=400",
+        imagen: "/js.webp",
         slug: "semana-5-javascript-typescript",
     },
     {
@@ -3895,8 +2944,8 @@ export const Semanas: SemanasProps[] = [
         descripcion: "Introducción a los frameworks modernos de JavaScript y sus ecosistemas de desarrollo.",
         icono: Component,
         color: "from-cyan-500 to-blue-500",
-        tecnologias: ["React", "Next.js", "Vue.js", "SPA"],
-        imagen: "/placeholder.svg?height=300&width=400",
+        tecnologias: ["React", "Next.js", "Vue.js"],
+        imagen: "/r-v.png",
         slug: "semana-6-principios-react",
     },
     {
@@ -3906,8 +2955,8 @@ export const Semanas: SemanasProps[] = [
         descripcion: "Profundización en React con componentes avanzados, hooks personalizados y patrones de diseño.",
         icono: Play,
         color: "from-indigo-500 to-purple-500",
-        tecnologias: ["React Hooks", "Custom Hooks", "Context", "Patterns"],
-        imagen: "/placeholder.svg?height=300&width=400",
+        tecnologias: ["React Hooks", "Custom Hooks", "Context"],
+        imagen: "/re-h.webp",
         slug: "semana-7-componentes-hooks",
     },
 ];

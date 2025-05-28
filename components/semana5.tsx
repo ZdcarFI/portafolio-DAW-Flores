@@ -43,15 +43,15 @@ export function Semana5Examples() {
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <Tabs defaultValue="objetivo" className="w-full">
+                        <Tabs defaultValue="reflexion" className="w-full">
                             <TabsList className="grid w-full grid-cols-2">
-                                <TabsTrigger value="objetivo">Objetivo</TabsTrigger>
+                                <TabsTrigger value="reflexion">Reflexion</TabsTrigger>
                                 <TabsTrigger value="codigo">Código</TabsTrigger>
                             </TabsList>
 
-                            <TabsContent value="objetivo" className="mt-4">
+                            <TabsContent value="reflexion" className="mt-4">
                                 <div className="prose prose-sm max-w-none">
-                                    <p>{ejemplo_5.find((e) => e.id === selectedExample)?.objetivo}</p>
+                                    <p>{ejemplo_5.find((e) => e.id === selectedExample)?.reflexion}</p>
                                 </div>
                             </TabsContent>
 

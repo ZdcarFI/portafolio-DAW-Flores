@@ -31,6 +31,7 @@ import {Semana4Examples} from "@/components/semana4";
 import {Semana5Examples} from "@/components/semana5";
 import {Semana6Examples} from "@/components/semana6";
 import {Semana7Examples} from "@/components/semana7";
+import Image from "next/image";
 
 interface SemanaData {
     id: number;
@@ -47,6 +48,7 @@ interface SemanaData {
         nombre: string;
         url: string;
     }[];
+    imagen?: string;
 }
 
 const semanasData: Record<string, SemanaData> = {
@@ -57,7 +59,7 @@ const semanasData: Record<string, SemanaData> = {
         icono: FileText,
         color: "from-blue-500 to-cyan-500",
         descripcionCompleta:
-            "Esta primera semana establece las bases fundamentales para todo el viaje de aprendizaje. Nos enfocamos en entender la metodología, establecer objetivos claros y crear un plan de estudio estructurado que nos guiará durante las próximas 6 semanas.",
+            "Esta primera semana establece las bases fundamentales para todo el viaje de aprendizaje. ",
         contenido: [
             {
                 nombre: "Historia y Evolución de la Web",
@@ -65,7 +67,7 @@ const semanasData: Record<string, SemanaData> = {
                     "Evolución desde HTML estático hasta aplicaciones web modernas",
                     "Diferencias entre sitios web estáticos y dinámicos",
                     "Arquitecturas web: Monolíticas vs Microservicios",
-                    "Tendencias actuales: JAMstack, Serverless, Edge Computing",
+
                 ],
             },
             {
@@ -77,21 +79,14 @@ const semanasData: Record<string, SemanaData> = {
                     "Node.js y gestión de paquetes con npm",
                 ],
             },
-            {
-                nombre: "Metodología de Aprendizaje",
-                temas: [
-                    "Técnicas de aprendizaje efectivo",
-                    "Establecimiento de objetivos SMART",
-                    "Recursos de aprendizaje y comunidades",
-                    "Creación de plan de estudio personalizado",
-                ],
-            },
+
         ],
         recursos: [
             {nombre: "MDN Web Docs", url: "https://developer.mozilla.org"},
-            {nombre: "W3C Standards", url: "https://www.w3.org"},
-            {nombre: "Can I Use", url: "https://caniuse.com"},
-        ]
+            {nombre: "Visual Studio Code", url: "https://code.visualstudio.com/"},
+            {nombre: "GitHub Docs", url: "https://docs.github.com/"},
+        ],
+        imagen: '/Fundamentos.png'
     },
 
     "semana-2-html-emmet": {
@@ -101,7 +96,7 @@ const semanasData: Record<string, SemanaData> = {
         icono: Code,
         color: "from-orange-500 to-red-500",
         descripcionCompleta:
-            "Dominio completo de HTML5 semántico y técnicas avanzadas de Emmet para maximizar la productividad en el desarrollo.",
+            "Dominio  de HTML5 semántico y técnicas avanzadas de Emmet para maximizar la productividad en el desarrollo.",
         contenido: [
             {
                 nombre: "HTML5 Fundamentals",
@@ -109,7 +104,7 @@ const semanasData: Record<string, SemanaData> = {
                     "Anatomía de un documento HTML5",
                     "Elementos semánticos: header, nav, main, section, article",
                     "Meta tags esenciales y SEO básico",
-                    "Validación HTML con W3C Validator",
+
                 ],
             },
             {
@@ -127,33 +122,18 @@ const semanasData: Record<string, SemanaData> = {
                     "Sintaxis básica de Emmet",
                     "Abreviaciones complejas para layouts",
                     "Snippets personalizados",
-                    "Workflow optimization",
-                ],
-            },
-            {
-                nombre: "Accesibilidad y SEO",
-                temas: [
-                    "Principios WCAG 2.1",
-                    "ARIA roles y properties",
-                    "SEO técnico con HTML",
-                    "Open Graph y Twitter Cards"
+
                 ],
             },
         ],
         recursos: [
             {nombre: "HTML5 Semantic Elements", url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element"},
-            {nombre: "HTML5 Validator", url: "https://validator.w3.org"},
             {nombre: "Semantic HTML Guide", url: "https://web.dev/semantic-html/"},
-            {nombre: "ARIA Landmarks", url: "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"},
             {nombre: "HTML5 Form Elements", url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form"},
-            {nombre: "Form Validation", url: "https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation"},
-            {nombre: "Accessible Forms", url: "https://webaim.org/techniques/forms/"},
-            {nombre: "Input Types Reference", url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input"},
-            {nombre: "Emmet Documentation", url: "https://docs.emmet.io"},
-            {nombre: "Emmet Cheat Sheet", url: "https://docs.emmet.io/cheat-sheet/"},
             {nombre: "VS Code Emmet", url: "https://code.visualstudio.com/docs/editor/emmet"},
             {nombre: "Emmet Interactive Demo", url: "https://emmet.io"},
         ],
+        imagen: "/Html-emmet.webp"
     },
 
     "semana-3-css-avanzado": {
@@ -192,21 +172,15 @@ const semanasData: Record<string, SemanaData> = {
                     "Efectos visuales con filters y clip-path",
                 ],
             },
-            {
-                nombre: "Metodologías y Optimización",
-                temas: [
-                    "BEM, SMACSS, ITCSS",
-                    "CSS-in-JS considerations",
-                    "Performance optimization",
-                    "Critical CSS y purging"
-                ],
-            },
+
         ],
         recursos: [
             {nombre: "CSS Grid Guide", url: "https://css-tricks.com/snippets/css/complete-guide-grid/"},
             {nombre: "Flexbox Guide", url: "https://css-tricks.com/snippets/css/a-guide-to-flexbox/"},
             {nombre: "CSS Animations", url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations"},
-        ]
+            {nombre: "Ejercicios práctica en clase", url: "https://github.com/MorrisJesus/PRACTICA-HTML-Y-CSS"},
+        ],
+        imagen: "/css.png"
     },
 
     "semana-4-tailwind-bootstrap": {
@@ -259,7 +233,8 @@ const semanasData: Record<string, SemanaData> = {
             {nombre: "Tailwind CSS Docs", url: "https://tailwindcss.com/docs"},
             {nombre: "Bootstrap Docs", url: "https://getbootstrap.com/docs"},
             {nombre: "Tailwind UI", url: "https://tailwindui.com"},
-        ]
+        ],
+        imagen: "/t-b.avif"
     },
 
     "semana-5-javascript-typescript": {
@@ -311,8 +286,12 @@ const semanasData: Record<string, SemanaData> = {
         recursos: [
             {nombre: "JavaScript MDN", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript"},
             {nombre: "TypeScript Handbook", url: "https://www.typescriptlang.org/docs/"},
-            {nombre: "You Don't Know JS", url: "https://github.com/getify/You-Dont-Know-JS"},
-        ]
+            {
+                nombre: "Practica en clase",
+                url: "https://github.com/MorrisJesus/PRACTICA-CALIFICADA-3ATENCIOFLORESVARGAS"
+            },
+        ],
+        imagen: "/js.webp"
     },
 
     "semana-6-principios-react": {
@@ -341,15 +320,7 @@ const semanasData: Record<string, SemanaData> = {
                     "Deployment en Vercel"
                 ],
             },
-            {
-                nombre: "Vue.js Ecosystem",
-                temas: [
-                    "Template syntax y directivas",
-                    "Composition API",
-                    "Vue Router y Pinia",
-                    "Single File Components"
-                ],
-            },
+
             {
                 nombre: "Framework Comparison",
                 temas: [
@@ -364,7 +335,8 @@ const semanasData: Record<string, SemanaData> = {
             {nombre: "React Docs", url: "https://react.dev"},
             {nombre: "Next.js Docs", url: "https://nextjs.org/docs"},
             {nombre: "Vue.js Guide", url: "https://vuejs.org/guide/"},
-        ]
+        ],
+        imagen: "/r-v.png"
     },
 
     "semana-7-componentes-hooks": {
@@ -377,23 +349,16 @@ const semanasData: Record<string, SemanaData> = {
             "Profundización completa en React con componentes avanzados, hooks personalizados .",
         contenido: [
             {
-                nombre: "Advanced Hooks",
+                nombre: "Hooks",
                 temas: [
+                    "useState, useEffect",
                     "useReducer y state complejo",
                     "useCallback y useMemo",
                     "useRef y DOM manipulation",
                     "Custom hooks creation",
                 ],
             },
-            {
-                nombre: "Component Patterns",
-                temas: [
-                    "Higher-Order Components",
-                    "Render Props pattern",
-                    "Compound Components",
-                    "Context API y providers"
-                ],
-            },
+
             {
                 nombre: "Performance Optimization",
                 temas: [
@@ -403,21 +368,14 @@ const semanasData: Record<string, SemanaData> = {
                     "Bundle optimization"
                 ],
             },
-            {
-                nombre: "Testing y Architecture",
-                temas: [
-                    "React Testing Library",
-                    "Custom hooks testing",
-                    "Component architecture",
-                    "Error boundaries"
-                ],
-            },
+
         ],
         recursos: [
-            {nombre: "React Advanced Patterns", url: "https://react.dev/learn"},
-            {nombre: "React Testing Library", url: "https://testing-library.com/docs/react-testing-library/intro/"},
-            {nombre: "React Performance", url: "https://react.dev/learn/render-and-commit"},
-        ]
+            {nombre: "React ", url: "https://react.dev/learn"},
+
+
+        ],
+        imagen: "/re-h.webp"
     },
 }
 
@@ -436,7 +394,7 @@ export default function SemanaPage({params}: PageProps) {
                 <div className="text-center">
                     <h1 className="text-2xl font-bold mb-4">Semana no encontrada</h1>
                     <Button asChild>
-                        <Link href="/">Volver al inicio</Link>
+                        <Link href="/">Volver</Link>
                     </Button>
                 </div>
             </div>
@@ -465,10 +423,10 @@ export default function SemanaPage({params}: PageProps) {
                 return <Semana4Examples/>
             case 5:
                 return <Semana5Examples/>
-             case 6:
-                 return <Semana6Examples />
-             case 7:
-                 return <Semana7Examples />
+            case 6:
+                return <Semana6Examples/>
+            case 7:
+                return <Semana7Examples/>
             default:
                 return <div className="text-center text-muted-foreground">Ejemplos en desarrollo...</div>
         }
@@ -477,29 +435,50 @@ export default function SemanaPage({params}: PageProps) {
     return (
         <div className="min-h-screen bg-gradient-to-br from-background via-muted/10 to-background">
             {/* Header */}
+
             <div className={`bg-gradient-to-br ${semana.color} text-white`}>
                 <div className="container px-4 md:px-6 py-12">
                     <motion.div initial={{opacity: 0, y: 20}} animate={{opacity: 1, y: 0}} transition={{duration: 0.6}}>
                         <Button variant="secondary" size="sm" asChild className="mb-6">
                             <Link href="/">
                                 <ArrowLeft className="mr-2 h-4 w-4"/>
-                                Volver al Curso
+                                Volver
                             </Link>
                         </Button>
 
-                        <div className="flex items-center gap-4 mb-6">
-                            <div className="p-4 rounded-xl bg-white/20 backdrop-blur-sm">
-                                <semana.icono className="h-12 w-12"/>
+                        {/* Grid Layout: Contenido + Imagen */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                            {/* Contenido */}
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-4 rounded-xl bg-white/20 backdrop-blur-sm">
+                                        <semana.icono className="h-12 w-12"/>
+                                    </div>
+                                    <div>
+                                        <Badge variant="secondary" className="mb-2">
+                                            Semana {semana.id}
+                                        </Badge>
+                                    </div>
+                                </div>
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">{semana.titulo}</h1>
+                                <p className="text-xl md:text-2xl opacity-90">{semana.subtitulo}</p>
+                                <p className="text-lg opacity-80 leading-relaxed">{semana.descripcionCompleta}</p>
                             </div>
-                            <div>
-                                <Badge variant="secondary" className="mb-2">
-                                    Semana {semana.id}
-                                </Badge>
-                            </div>
+
+                            {/* Imagen */}
+                            {semana.imagen && (
+                                <div
+                                    className="relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden bg-white/10 backdrop-blur-sm">
+                                    <Image
+                                        src={semana.imagen}
+                                        alt={semana.titulo}
+                                        fill
+                                        className="object-cover"
+                                        priority
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-bold mb-4">{semana.titulo}</h1>
-                        <p className="text-xl md:text-2xl opacity-90 mb-6">{semana.subtitulo}</p>
-                        <p className="text-lg opacity-80 max-w-4xl leading-relaxed">{semana.descripcionCompleta}</p>
                     </motion.div>
                 </div>
             </div>
@@ -627,7 +606,7 @@ export default function SemanaPage({params}: PageProps) {
                     )}
 
                     <Button variant="secondary" asChild className="mx-auto">
-                        <Link href="/">Ver Todas las Semanas</Link>
+                        <Link href="/#projects">Ver Todas las Semanas</Link>
                     </Button>
 
                     {semana.id < 7 && (

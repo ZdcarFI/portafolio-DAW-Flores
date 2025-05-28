@@ -48,7 +48,7 @@ const informacionContacto = [
         titulo: "WhatsApp",
         valor: "Disponible previa solicitud",
         descripcion: "Solo para proyectos profesionales",
-        enlace: "https://bit.ly/3rkZVcU",
+        enlace: "https://api.whatsapp.com/send/?phone=981176643&text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n&type=phone_number&app_absent=0",
     },
     {
         icon: MapPin,
@@ -156,7 +156,7 @@ export default function ContactForm() {
     }
 
     return (
-        <section id="contacto" className="py-20 min-h-screen bg-gradient-to-br from-background to-muted/20">
+        <section id="contact" className="py-20 min-h-screen bg-gradient-to-br from-background to-muted/20">
             <div className="container px-4 md:px-6">
                 {/* Encabezado */}
                 <motion.div

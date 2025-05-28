@@ -20,15 +20,14 @@ const themes = [
     {name: "Oscuro", value: "dark", color: "#1e293b"},
     {name: "Azul", value: "blue", color: "#3b82f6"},
     {name: "Verde", value: "green", color: "#10b981"},
-    {name: "Morado", value: "purple", color: "#8b5cf6"},
     {name: "Naranja", value: "orange", color: "#f97316"},
-    {name: "Rosa", value: "pink", color: "#ec4899"},
+
 ]
 
 export function ThemeSwitcher() {
     const {setTheme, theme: currentTheme} = useTheme()
     const [isOpen, setIsOpen] = useState(false)
-    const [autoChangeTheme, setAutoChangeTheme] = useState(true)
+    const [autoChangeTheme, setAutoChangeTheme] = useState(false)
     const [currentIndex, setCurrentIndex] = useState(0)
 
     // Cargar la preferencia de cambio automático desde localStorage al montar el componente

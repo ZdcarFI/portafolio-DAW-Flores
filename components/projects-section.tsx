@@ -19,7 +19,7 @@ export default function ProjectsSection() {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
-    // Auto-play functionality
+
     useEffect(() => {
         if (!isAutoPlaying) return
 
@@ -56,15 +56,12 @@ export default function ProjectsSection() {
                 >
                     <Badge variant="outline" className="mb-4">
                         <BookOpen className="mr-2 h-4 w-4"/>
-                        Mi Viaje de Aprendizaje
+                        <span className="text-primary">Mi Viaje de Aprendizaje </span>
                     </Badge>
                     <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-                        7 Semanas de <span className="text-primary">Desarrollo Web</span>
+                        Desarrollo de Aplicaciones Web
                     </h2>
-                    <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                        Un recorrido estructurado desde los fundamentos hasta tecnologías avanzadas del desarrollo web
-                        moderno.
-                    </p>
+
                 </motion.div>
 
                 {/* Main Carousel */}

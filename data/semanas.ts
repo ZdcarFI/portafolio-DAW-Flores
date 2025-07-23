@@ -1,4 +1,17 @@
-import {Code, Component, Cpu, FileText, LucideIcon, Palette, Play, Zap} from "lucide-react";
+import {
+    Code,
+    Component,
+    Cpu,
+    Database,
+    FileText,
+    Globe,
+    LucideIcon,
+    Palette,
+    Play,
+    Server,
+    Shield,
+    Zap
+} from "lucide-react";
 
 interface Ejemplo {
     id: number
@@ -7,6 +20,736 @@ interface Ejemplo {
     reflexion: string
     codigo: string
 }
+
+export const ejemplo_15: Ejemplo[] = [
+    {
+        id: 1,
+        titulo: "Flask Routes",
+        descripcion: "Definición de rutas básicas en Flask",
+        reflexion: "La simplicidad de Flask permite crear aplicaciones web rápidamente, con rutas claras y fáciles de configurar.",
+        codigo: `from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)
+
+products = []
+
+@app.route('/')
+def index():
+    return render_template('index.html', products=products)
+
+@app.route('/add', methods=['POST'])
+def add_product():
+    name = request.form.get('name')
+    price = float(request.form.get('price'))
+    products.append({'name': name, 'price': price})
+    return redirect(url_for('index'))
+
+@app.route('/delete/<int:id>')
+def delete_product(id):
+    if id < len(products):
+        products.pop(id)
+    return redirect(url_for('index'))
+`,
+    },
+    {
+        id: 2,
+        titulo: "Flask Template",
+        descripcion: "Creación de una plantilla Jinja2 para mostrar productos",
+        reflexion: "Jinja2 ofrece una sintaxis flexible para crear vistas dinámicas, integrándose perfectamente con la filosofía ligera de Flask.",
+        codigo: `<!-- templates/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h2>Products</h2>
+    
+    <form method="POST" action="{{ url_for('add_product') }}">
+        <input type="text" name="name" placeholder="Product Name" required>
+        <input type="number" name="price" placeholder="Price" step="0.01" required>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for index, product in products|enumerate %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_product', id=index) }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>`,
+    },
+]
+
+export const ejemplo_14: Ejemplo[] = [
+    {
+        id: 1,
+        titulo: "Django REST API",
+        descripcion: "Creación de una API REST con Django REST Framework",
+        reflexion: "Django REST Framework proporciona herramientas poderosas para crear APIs robustas, integrándose perfectamente con el ORM de Django.",
+        codigo: `# models.py
+from django.db import models
+
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    category = models.ForeignKey('Category', on_delete=models.CASCADE)
+
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+# serializers.py
+from rest_framework import serializers
+from .models import Product, Category
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'name', 'price', 'category']
+
+# views.py
+from rest_framework import viewsets
+from .models import Product
+from .serializers import ProductSerializer
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+# urls.py
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ProductViewSet
+
+router = DefaultRouter()
+router.register(r'products', ProductViewSet)
+
+urlpatterns = [
+    path('api/', include(router.urls)),
+]
+`,
+    },
+    {
+        id: 2,
+        titulo: "FastAPI Endpoint",
+        descripcion: "Creación de un endpoint con FastAPI",
+        reflexion: "FastAPI destaca por su velocidad, tipado estático y documentación automática, ideal para APIs modernas de alto rendimiento.",
+        codigo: `from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class Product(BaseModel):
+    name: str
+    price: float
+    category_id: int
+
+products = []
+
+@app.get("/products")
+async def get_products():
+    return products
+
+@app.post("/products")
+async def create_product(product: Product):
+    products.append(product)
+    return product
+
+@app.get("/products/{product_id}")
+async def get_product(product_id: int):
+    if product_id >= len(products):
+        raise HTTPException(status_code=404, detail="Product not found")
+    return products[product_id]
+
+@app.put("/products/{product_id}")
+async def update_product(product_id: int, product: Product):
+    if product_id >= len(products):
+        raise HTTPException(status_code=404, detail="Product not found")
+    products[product_id] = product
+    return product
+
+@app.delete("/products/{product_id}")
+async def delete_product(product_id: int):
+    if product_id >= len(products):
+        raise HTTPException(status_code=404, detail="Product not found")
+    return {"message": "Product deleted"}
+`,
+    },
+]
+export const ejemplo_13: Ejemplo[] = [
+    {
+        id: 1,
+        titulo: "Eloquent ORM",
+        descripcion: "Uso de Eloquent para manejar relaciones y consultas",
+        reflexion: "Eloquent simplifica la interacción con bases de datos mediante un ORM intuitivo, permitiendo manejar relaciones complejas con facilidad.",
+        codigo: `<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Product extends Model
+{
+    protected $fillable = ['name', 'price', 'category_id'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+}
+
+class Category extends Model
+{
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+}
+
+// Ejemplo de uso en controlador
+public function index()
+{
+    // Consulta con relaciones
+    $products = Product::with(['category', 'tags'])
+        ->where('price', '>', 100)
+        ->orderBy('name')
+        ->get();
+
+    // Crear producto con relaciones
+    $product = Product::create([
+        'name' => 'New Product',
+        'price' => 99.99,
+        'category_id' => 1
+    ]);
+    
+    // Asignar tags
+    $product->tags()->attach([1, 2]);
+
+    return response()->json($products);
+}
+
+// API Routes (routes/api.php)
+use App\Http\Controllers\ProductController;
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'store']);
+`,
+    },
+    {
+        id: 2,
+        titulo: "Middleware y API REST",
+        descripcion: "Implementación de middleware y endpoints REST",
+        reflexion: "Los middleware en Laravel permiten un control fino del flujo de solicitudes, mientras que las APIs REST facilitan la integración con frontends modernos.",
+        codigo: `<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+
+class EnsureUserIsAdmin
+{
+    public function handle(Request $request, Closure $next)
+    {
+        if (!auth()->user()?->is_admin) {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+        return $next($request);
+    }
+}
+
+// API Controller
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use Illuminate\Http\Request;
+
+class ApiProductController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+        $this->middleware('admin')->only(['store', 'update', 'destroy']);
+    }
+
+    public function index()
+    {
+        return Product::with(['category'])->get();
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $product = Product::create($validated);
+        return response()->json($product, 201);
+    }
+}
+
+// Routes (routes/api.php)
+use App\Http\Controllers\ApiProductController;
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('/products', [ApiProductController::class, 'index']);
+    Route::post('/products', [ApiProductController::class, 'store']);
+});
+`,
+    },
+]
+
+export const ejemplo_12: Ejemplo[] = [
+    {
+        id: 1,
+        titulo: "Laravel Controller",
+        descripcion: "Creación de un controlador básico en Laravel",
+        reflexion: "Los controladores en Laravel simplifican la lógica de negocio y el manejo de rutas, proporcionando una estructura clara para aplicaciones web.",
+        codigo: `<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use Illuminate\Http\Request;
+
+class ProductController extends Controller
+{
+    public function index()
+    {
+        $products = Product::all();
+        return view('products.index', compact('products'));
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+        ]);
+
+        Product::create($validated);
+        return redirect()->route('products.index')->with('success', 'Product created successfully');
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+        ]);
+
+        $product->update($validated);
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
+    }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
+    }
+}
+
+// Routes (routes/web.php)
+use App\Http\Controllers\ProductController;
+
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+`,
+    },
+    {
+        id: 2,
+        titulo: "Laravel Blade Template",
+        descripcion: "Creación de una vista con Blade para mostrar productos",
+        reflexion: "Blade proporciona una sintaxis limpia y poderosa para crear vistas dinámicas, integrándose perfectamente con el ecosistema de Laravel.",
+        codigo: `<!-- resources/views/products/index.blade.php -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Products</h2>
+        
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form action="{{ route('products.store') }}" method="POST">
+            @csrf
+            <input type="text" name="name" placeholder="Product Name" required>
+            <input type="number" name="price" placeholder="Price" required>
+            <button type="submit">Add Product</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($products as $product)
+                    <tr>
+                        <td>{{ $product->id }}</td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->price }}</td>
+                        <td>
+                            <form action="{{ route('products.update', $product) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="text" name="name" value="{{ $product->name }}" required>
+                                <input type="number" name="price" value="{{ $product->price }}" required>
+                                <button type="submit">Update</button>
+                            </form>
+                            <form action="{{ route('products.destroy', $product) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>`,
+    },
+]
+
+export const ejemplo_11: Ejemplo[] = [
+    {
+        id: 1,
+        titulo: "JSP Page with Spring",
+        descripcion: "Creación de una página JSP integrada con Spring MVC",
+        reflexion: "JSP sigue siendo útil para aplicaciones legacy o casos donde se requiere renderizado del lado del servidor, con Spring facilitando la integración.",
+        codigo: `<%-- /WEB-INF/views/productList.jsp --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h2>Products</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+      <c:forEach var="product" "> -->
+                <tr>
+                    <td>1</td>
+                    <td>Monito</td>
+                    <td>S/. 450</td>
+                    <td>
+                        <a href="/products/edit/}">Editar</a>
+                        <a href="/products/delete/">Eliminar</a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+    <a href="/products/new">Agregar nuevo producto</a>
+</body>
+</html>
+
+// Spring Controller
+package com.example.demo.controller;
+
+import com.example.demo.model.Product;
+import com.example.demo.service.ProductService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class ProductWebController {
+    private final ProductService productService;
+
+    public ProductWebController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping("/products")
+    public String listProducts(Model model) {
+        model.addAttribute("products", productService.findAll());
+        return "productList";
+    }
+}`,
+    },
+    {
+        id: 2,
+        titulo: "Jakarta EE Servlet",
+        descripcion: "Implementación de un servlet con Jakarta EE",
+        reflexion: "Los servlets en Jakarta EE son la base para aplicaciones web dinámicas, complementando bien la arquitectura de Spring MVC.",
+        codigo: `package com.example.demo.servlet;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@WebServlet("/hello")
+public class HelloServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<html><body>");
+        out.println("<h1>Hello from Jakarta EE Servlet!</h1>");
+        out.println("<p>Current time: " + new java.util.Date() + "</p>");
+        out.println("</body></html>");
+    }
+}`,
+    },
+]
+
+export const ejemplo_10: Ejemplo[] = [
+    {
+        id: 1,
+        titulo: "Spring Security Configuration",
+        descripcion: "Configuración básica de Spring Security con JWT",
+        reflexion: "Spring Security ofrece un marco robusto para implementar autenticación y autorización, mientras que JWT permite una autenticación sin estado escalable.",
+        codigo: `package com.example.demo.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.example.demo.security.JwtAuthenticationFilter;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthFilter) throws Exception {
+        http
+            .csrf().disable()
+            .authorizeRequests()
+                .antMatchers("/api/auth/**").permitAll()
+                .anyRequest().authenticated()
+            .and()
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        
+        return http.build();
+    }
+}
+
+@Component
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+        String token = getJwtFromRequest(request);
+        if (token != null && tokenProvider.validateToken(token)) {
+            String username = tokenProvider.getUsernameFromJWT(token);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            UsernamePasswordAuthenticationToken authentication = 
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
+        filterChain.doFilter(request, response);
+    }
+
+    private String getJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+}`,
+    },
+    {
+        id: 2,
+        titulo: "JWT Token Generation",
+        descripcion: "Generación y validación de tokens JWT",
+        reflexion: "Los tokens JWT permiten una autenticación sin estado, ideal para APIs REST, pero requieren una gestión cuidadosa de la seguridad de los tokens.",
+        codigo: `package com.example.demo.security;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
+import java.util.Date;
+
+@Component
+public class JwtTokenProvider {
+    private final String SECRET_KEY = "your-secret-key";
+    private final long EXPIRATION_TIME = 86400000; // 1 día en milisegundos
+
+    public String generateToken(String username) {
+        return Jwts.builder()
+            .setSubject(username)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+            .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+            .compact();
+    }
+
+    public String getUsernameFromJWT(String token) {
+        return Jwts.parser()
+            .setSigningKey(SECRET_KEY)
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}`,
+    },
+]
+
+
+export const ejemplo_9: Ejemplo[] = [
+    {
+        id: 1,
+        titulo: "Spring MVC Controller",
+        descripcion: "Creación de un controlador REST con Spring MVC",
+        reflexion: "Los controladores en Spring MVC permiten manejar solicitudes HTTP de manera eficiente, integrando fácilmente lógica de negocio y respuestas en formato JSON.",
+        codigo: `package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.*;
+import com.example.demo.model.Product;
+import com.example.demo.service.ProductService;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/products")
+public class ProductController {
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return productService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+        return productService.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+    }
+
+    @PostMapping
+    public Product createProduct(@RequestBody Product product) {
+        return productService.save(product);
+    }
+
+    @PutMapping("/{id}")
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
+        product.setId(id);
+        return productService.save(product);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productService.deleteById(id);
+    }
+}`,
+    },
+    {
+        id: 2,
+        titulo: "Spring Dependency Injection",
+        descripcion: "Implementación de inyección de dependencias con Spring",
+        reflexion: "La inyección de dependencias en Spring permite una mejor modularidad y facilidad de testing al desacoplar los componentes de la aplicación.",
+        codigo: `package com.example.demo.service;
+
+import com.example.demo.model.Product;
+import com.example.demo.repository.ProductRepository;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ProductService {
+    private final ProductRepository productRepository;
+
+    // Inyección de dependencia vía constructor
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
+    public Optional<Product> findById(Long id) {
+        return productRepository.findById(id);
+    }
+
+    public Product save(Product product) {
+        return productRepository.save(product);
+    }
+
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
+    }
+}`,
+    },
+]
+
 
 export const ejemplo_7: Ejemplo[] = [
     {
@@ -2959,4 +3702,82 @@ export const Semanas: SemanasProps[] = [
         imagen: "/re-h.webp",
         slug: "semana-7-componentes-hooks",
     },
+    {
+        id: 9,
+        titulo: "Desarrollo Backend con Java Spring",
+        subtitulo: "Spring Core & MVC",
+        descripcion: "Introducción al desarrollo backend con Spring, enfocándose en los fundamentos de Spring Core y Spring MVC para crear aplicaciones robustas.",
+        icono: Server,
+        color: "from-green-500 to-teal-500",
+        tecnologias: ["Java", "Spring", "Spring MVC"],
+        imagen: "/spring.png",
+        slug: "semana-9-desarrollo-backend-spring",
+    },
+    {
+        id: 10,
+        titulo: "Autenticación con Java Spring Boot",
+        subtitulo: "Spring Security & JWT",
+        descripcion: "Implementación de sistemas de autenticación y autorización usando Spring Security y JSON Web Tokens (JWT).",
+        icono: Shield,
+        color: "from-blue-500 to-indigo-500",
+        tecnologias: ["Java", "Spring Boot", "Spring Security", "JWT"],
+        imagen: "/spring-security.jpg",
+        slug: "semana-10-autenticacion-spring-boot",
+    },
+    {
+        id: 11,
+        titulo: "JSP con Jakarta y Spring",
+        subtitulo: "Java Server Pages & Jakarta EE",
+        descripcion: "Desarrollo de aplicaciones web dinámicas utilizando JSP, Jakarta EE y su integración con Spring.",
+        icono: Code,
+        color: "from-purple-500 to-pink-500",
+        tecnologias: ["Java", "JSP", "Jakarta EE", "Spring"],
+        imagen: "/jsp.png",
+        slug: "semana-11-jsp-jakarta-spring",
+    },
+    {
+        id: 12,
+        titulo: "Desarrollo Web con PHP y Laravel",
+        subtitulo: "PHP & Laravel Fundamentals",
+        descripcion: "Introducción al desarrollo web con PHP y el framework Laravel, enfocándose en la creación de aplicaciones modernas.",
+        icono: Globe,
+        color: "from-red-500 to-orange-500",
+        tecnologias: ["PHP", "Laravel"],
+        imagen: "/laravel.webp",
+        slug: "semana-12-desarrollo-web-laravel",
+    },
+    {
+        id: 13,
+        titulo: "Laravel Intermedio: Eloquent, Middleware y API REST",
+        subtitulo: "Avanzando en Laravel",
+        descripcion: "Exploración de Eloquent ORM, middleware para control de acceso y creación de APIs RESTful con Laravel.",
+        icono: Database,
+        color: "from-orange-500 to-yellow-500",
+        tecnologias: ["PHP", "Laravel", "Eloquent", "REST API"],
+        imagen: "/laravel-rest.webp",
+        slug: "semana-13-laravel-intermedio",
+    },
+    {
+        id: 14,
+        titulo: "Backend con Python: Django, Flask, y FastAPI",
+        subtitulo: "Frameworks Python para Backend",
+        descripcion: "Desarrollo de aplicaciones backend con los frameworks Python más populares: Django, Flask y FastAPI.",
+        icono: Code,
+        color: "from-blue-600 to-cyan-600",
+        tecnologias: ["Python", "Django", "Flask", "FastAPI"],
+        imagen: "/python.png",
+        slug: "semana-14-backend-python",
+    },
+    {
+        id: 15,
+        titulo: "Flask: Introducción, Rutas y Plantillas",
+        subtitulo: "Fundamentos de Flask",
+        descripcion: "Introducción al desarrollo web con Flask, enfocándose en la creación de rutas, plantillas y aplicaciones ligeras.",
+        icono: Server,
+        color: "from-teal-500 to-green-500",
+        tecnologias: ["Python", "Flask"],
+        imagen: "/flask.webp",
+        slug: "semana-15-flask-introduccion",
+    },
+
 ];

@@ -48,7 +48,8 @@ const informacionContacto = [
         titulo: "WhatsApp",
         valor: "Disponible previa solicitud",
         descripcion: "Solo para proyectos profesionales",
-        enlace: "https://api.whatsapp.com/send/?phone=981176643&text=Hola%2C+quiero+m%C3%A1s+informaci%C3%B3n&type=phone_number&app_absent=0",
+        enlace: "https://api.whatsapp.com/send/?phone=981176643&text=Hola+Carlos%2C+quiero+m%C3%A1s+informaci%C3%B3n&type=phone_number&app_absent=0",
+
     },
     {
         icon: MapPin,
@@ -57,6 +58,8 @@ const informacionContacto = [
         descripcion: "Disponible mundialmente",
         enlace: null,
     },
+
+
 ]
 
 
@@ -225,131 +228,7 @@ export default function ContactForm() {
                     </motion.div>
 
                     {/* Formulario de contacto */}
-                    <motion.div
-                        className="lg:col-span-3"
-                        initial={{opacity: 0, x: 20}}
-                        animate={{opacity: 1, x: 0}}
-                        transition={{duration: 0.6, delay: 0.4}}
-                    >
-                        <Card className="overflow-hidden shadow-lg">
-                            <CardHeader className="bg-gradient-to-r from-primary/5 to-primary/10">
-                                <CardTitle className="text-2xl">Envíame un Mensaje</CardTitle>
-                                <CardDescription>Completa el formulario y te responderé en menos de 24
-                                    horas.</CardDescription>
-                            </CardHeader>
-                            <CardContent className="p-8">
-                                <form onSubmit={manejarEnvio} className="space-y-6">
-                                    <div className="grid gap-6 md:grid-cols-2">
-                                        <div className="space-y-2">
-                                            <Label htmlFor="nombre">Nombre Completo *</Label>
-                                            <Input
-                                                id="nombre"
-                                                name="nombre"
-                                                placeholder="Tu nombre completo"
-                                                value={datosFormulario.nombre}
-                                                onChange={manejarCambio}
-                                                required
-                                                className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
-                                            />
-                                        </div>
 
-                                        <div className="space-y-2">
-                                            <Label htmlFor="email">Correo Electrónico *</Label>
-                                            <Input
-                                                id="email"
-                                                name="email"
-                                                type="email"
-                                                placeholder="tu@email.com"
-                                                value={datosFormulario.email}
-                                                onChange={manejarCambio}
-                                                required
-                                                className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="grid gap-6 md:grid-cols-2">
-                                        <div className="space-y-2">
-                                            <Label htmlFor="empresa">Empresa (Opcional)</Label>
-                                            <Input
-                                                id="empresa"
-                                                name="empresa"
-                                                placeholder="Nombre de tu empresa"
-                                                value={datosFormulario.empresa}
-                                                onChange={manejarCambio}
-                                                className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
-                                            />
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <Label htmlFor="asunto">Asunto *</Label>
-                                            <Input
-                                                id="asunto"
-                                                name="asunto"
-                                                placeholder="Asunto de tu mensaje"
-                                                value={datosFormulario.asunto}
-                                                onChange={manejarCambio}
-                                                required
-                                                className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <Label htmlFor="mensaje">Mensaje *</Label>
-                                        <Textarea
-                                            id="mensaje"
-                                            name="mensaje"
-                                            placeholder="Cuéntame sobre tu proyecto o consulta..."
-                                            value={datosFormulario.mensaje}
-                                            onChange={manejarCambio}
-                                            required
-                                            className="min-h-[150px] resize-none transition-all duration-200 focus:ring-2 focus:ring-primary/20"
-                                        />
-                                    </div>
-
-                                    <div className="flex gap-4">
-                                        <Button type="submit" className="flex-1" disabled={estadoFormulario !== "idle"}>
-                                            {estadoFormulario === "idle" && (
-                                                <>
-                                                    <Send className="mr-2 h-4 w-4"/>
-                                                    Enviar Mensaje
-                                                </>
-                                            )}
-                                            {estadoFormulario === "submitting" && (
-                                                <>
-                                                    <RefreshCw className="mr-2 h-4 w-4 animate-spin"/>
-                                                    Enviando...
-                                                </>
-                                            )}
-                                            {estadoFormulario === "success" && (
-                                                <>
-                                                    <CheckCircle className="mr-2 h-4 w-4"/>
-                                                    Enviado Exitosamente
-                                                </>
-                                            )}
-                                            {estadoFormulario === "error" && (
-                                                <>
-                                                    <span className="mr-2">❌</span>
-                                                    Error al Enviar
-                                                </>
-                                            )}
-                                        </Button>
-
-                                        <Button
-                                            type="button"
-                                            variant="outline"
-                                            onClick={manejarReset}
-                                            disabled={estadoFormulario !== "idle"}
-                                            className="flex-1"
-                                        >
-                                            Limpiar
-                                        </Button>
-                                    </div>
-                                </form>
-                            </CardContent>
-                        </Card>
-                    </motion.div>
                 </div>
             </div>
         </section>
